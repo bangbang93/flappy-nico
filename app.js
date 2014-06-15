@@ -87,7 +87,7 @@ io.sockets.on('connection', function (socket) {
 
             if (typeof data.score !== "undefined") client.update_score(data.score);
 
-            console.log("STATE: " + client.state);
+//            console.log("STATE: " + client.state);
         }
     });
 
