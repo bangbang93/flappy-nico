@@ -99,18 +99,28 @@ var ExternalUI = (function () {
     }
 
     var enable_character_username_submission = function () {
-        document.onkeydown = function (event) {
-            var e = e || window.event;
-
-            if (e.keyCode === 13) {
-                var username = $("#loading-input-username input").val();
-                Network.send.register(username);
-                $loading_input_username_invalid.hide();
-                disable_character_username_submission();
-                show_connecting_message();
-            }
-        }
+        document.getElementById('loginWeibo').onclick = function(event){
+            window.open('http://auth.bangbang93.com/sina/?url=http://fp.nodoka.cc/sina');
+        };
+//        document.onkeydown = function (event) {
+//            var e = e || window.event;
+//
+//            if (e.keyCode === 13) {
+//                var username = $("#loading-input-username input").val();
+//                Network.send.register(username);
+//                $loading_input_username_invalid.hide();
+//                disable_character_username_submission();
+//                show_connecting_message();
+//            }
+//        }
     }
+
+    var sina_login_callback = function(username){
+        Network.send.register(username);
+        $loading_input_username_invalid.hide();
+        disable_character_username_submission();
+        show_connecting_message();
+    };
 
     var disable_character_username_submission = function () {
         document.onkeydown = function () {}
@@ -160,6 +170,8 @@ var ExternalUI = (function () {
 
         update_connected_clients_list : update_connected_clients_list,
 
-        begin_registration : begin_registration
+        begin_registration : begin_registration,
+
+        sina_login_callback: sina_login_callback
     }
 })();

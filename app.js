@@ -1,11 +1,30 @@
 // express and sockets setup
 var express = require("express");
+var http = require('http');
 var app = express();
 var port = Number(process.env.PORT || 3700);
 
 app.use(express.static(__dirname + '/assets'));
 app.get('/', function(request, response) {
 	response.sendfile('./assets/index.html');
+});
+
+app.get('/sina', function(req, res){
+    var access_token = req.param('access_token');
+    http.get('http://auth.bangbang93.com/sina/info.php?mode=user_info&access_token=' + access_token, function(response){
+        var size = 0;
+        var chunks = [];
+        response.on('data', function(chunk){
+            size += chunk.length;
+            chunks.push(chunk);
+        });
+        response.on('end', function(){
+            var data = Buffer.concat(chunks, size).toString();
+            console.log(data);
+            data = JSON.parse(data);
+            res.send("<script>window.opener.ExternalUI.sina_login_callback('" + data.name + "');window.close();</script>");
+        });
+    })
 });
 
 var io = require('socket.io').listen(app.listen(port));
