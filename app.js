@@ -2,7 +2,7 @@
 var express = require("express");
 var http = require('http');
 var app = express();
-var port = Number(process.env.PORT || 3700);
+var port = process.env.PORT || '/tmp/fp-nico.sock';
 
 app.use(express.static(__dirname + '/assets'));
 app.get('/', function(request, response) {
