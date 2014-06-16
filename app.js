@@ -20,7 +20,7 @@ app.get('/sina', function(req, res){
         });
         response.on('end', function(){
             var data = Buffer.concat(chunks, size).toString();
-            console.log(data);
+//            console.log(data);
             data = JSON.parse(data);
             res.send("<script>window.opener.ExternalUI.sina_login_callback('" + data.name + "');window.close();</script>");
         });

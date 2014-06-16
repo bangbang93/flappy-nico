@@ -100,7 +100,7 @@ var ExternalUI = (function () {
 
     var enable_character_username_submission = function () {
         document.getElementById('loginWeibo').onclick = function(event){
-            window.open('http://auth.bangbang93.com/sina/?url=http://fp.nodoka.cc/sina');
+            window.open('http://auth.bangbang93.com/sina/?url=http://' + window.location.host + '/sina');
         };
 //        document.onkeydown = function (event) {
 //            var e = e || window.event;
