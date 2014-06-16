@@ -45,9 +45,9 @@ app.get('/login_proxy/:access_token', function(req, res) {
         });
     });
 });
-process.umask('0777');
+process.umask('0000');
 var io = require('socket.io').listen(app.listen(port));
-process.umask('0664');
+process.umask('0002');
 console.log("Listening on port " + port);
 
 // custom modules
