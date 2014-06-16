@@ -341,7 +341,7 @@ var Game = (function () {
             });
 
             Network.on.bird_jumped(function(data) {
-                if (data !== bird.player_id && current_state == states.GAME_SCREEN) {
+                if (bird != undefined && data !== bird.player_id && current_state == states.GAME_SCREEN) {
                     if (bird_array[data]) bird_array[data].jump();
                 }
             });
