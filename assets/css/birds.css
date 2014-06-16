@@ -70,7 +70,7 @@ h1 {
     width: 34px;
     height: 24px;
     margin: 0px 5px 3px 5px;
-    background-image: url('../images/bird.png');
+    background-image: url('../images/nico.png');
 }
 
 .nav-parent {
@@ -116,4 +116,21 @@ h1 {
 
 #about a:hover {
     color: #555;
+}
+
+#login-iframe {
+    width: 100%;
+    height: 100%;
+    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.login-hide {
+    display: none;
+}
+
+.login-show {
+    display: block;
 }

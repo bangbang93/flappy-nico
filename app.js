@@ -11,20 +11,39 @@ app.get('/', function(request, response) {
 
 app.get('/sina', function(req, res){
     var access_token = req.param('access_token');
-    http.get('http://auth.bangbang93.com/sina/info.php?mode=user_info&access_token=' + access_token, function(response){
+    res.send("<script>window.parent.ExternalUI.sina_login_callback('" + access_token + "');</script>");
+//    http.get('http://auth.bangbang93.com/sina/info.php?mode=user_info&access_token=' + access_token, function(response){
+//        var size = 0;
+//        var chunks = [];
+//        response.on('data', function(chunk){
+//            size += chunk.length;
+//            chunks.push(chunk);
+//        });
+//        response.on('end', function(){
+//            var data = Buffer.concat(chunks, size).toString();
+////            console.log(data);
+//            data = JSON.parse(data);
+//            res.send("<script>window.parent.ExternalUI.sina_login_callback('" + data.name + "');</script>");
+//        });
+//    })
+});
+
+app.get('/login_proxy/:access_token', function(req, res) {
+    var access_token = req.param('access_token');
+    http.get('http://auth.bangbang93.com/sina/info.php?mode=user_info&access_token=' + access_token, function (response) {
         var size = 0;
         var chunks = [];
-        response.on('data', function(chunk){
+        response.on('data', function (chunk) {
             size += chunk.length;
             chunks.push(chunk);
         });
-        response.on('end', function(){
+        response.on('end', function () {
             var data = Buffer.concat(chunks, size).toString();
-//            console.log(data);
+//        console.log(data);
             data = JSON.parse(data);
-            res.send("<script>window.opener.ExternalUI.sina_login_callback('" + data.name + "');window.close();</script>");
+            res.send(data);
         });
-    })
+    });
 });
 
 var io = require('socket.io').listen(app.listen(port));

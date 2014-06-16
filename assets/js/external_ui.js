@@ -100,7 +100,11 @@ var ExternalUI = (function () {
 
     var enable_character_username_submission = function () {
         document.getElementById('loginWeibo').onclick = function(event){
-            window.open('http://auth.bangbang93.com/sina/?url=http://' + window.location.host + '/sina');
+            var loginFrame = document.getElementById('login-iframe');
+            loginFrame.className = 'login-show';
+            loginFrame.src = 'http://auth.bangbang93.com/sina/?url=http://' + window.location.host + '/sina';
+            document.getElementById('gamecontainer').style.display = 'none';
+
         };
 //        document.onkeydown = function (event) {
 //            var e = e || window.event;
@@ -115,11 +119,35 @@ var ExternalUI = (function () {
 //        }
     }
 
-    var sina_login_callback = function(username){
-        Network.send.register(username);
-        $loading_input_username_invalid.hide();
-        disable_character_username_submission();
-        show_connecting_message();
+    var sina_login_callback = function(access_token){
+        $.ajax('http://' + window.location.host + '/login_proxy/' + access_token,{
+            method: 'GET',
+            success: function(rawdata, status, xhr){
+                try {
+                    var data;
+                    if (typeof rawdata == 'string') {
+                        data = JSON.parse(rawdata);
+                    } else {
+                        data = rawdata;
+                    }
+                } catch (e) {
+                    alert('登陆解析失败，错误信息为' + JSON.stringify(rawdata));
+                    document.getElementById('gamecontainer').style.display = 'block';
+                    return;
+                }
+                var username = data.name;
+                if (!username){
+                    alert('登陆失败，错误信息为' + JSON.stringify(rawdata));
+                    document.getElementById('gamecontainer').style.display = 'block';
+                    return;
+                }
+                Network.send.register(username);
+                document.getElementById('gamecontainer').style.display = 'block';
+                $loading_input_username_invalid.hide();
+                disable_character_username_submission();
+                show_connecting_message();
+            }
+        })
     };
 
     var disable_character_username_submission = function () {
