@@ -142,6 +142,8 @@ var ExternalUI = (function () {
                     return;
                 }
                 Network.send.register(username);
+                var loginFrame = document.getElementById('login-iframe');
+                loginFrame.className = 'login-hide';
                 document.getElementById('gamecontainer').style.display = 'block';
                 $loading_input_username_invalid.hide();
                 disable_character_username_submission();
