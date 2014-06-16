@@ -347,7 +347,7 @@ var Game = (function () {
             });
 
             Network.on.bird_death(function(data) {
-                if (data !== bird.player_id && current_state == states.GAME_SCREEN) {
+                if (bird != undefined && data !== bird.player_id && current_state == states.GAME_SCREEN) {
                     if (bird_array[data]) {
                         Animator.end_bird_animations(data);
                         bird_array[data].die();
